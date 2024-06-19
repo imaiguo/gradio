@@ -2,7 +2,6 @@
 # Gradio
 
 ## 1. 准备Python虚拟环境
-
 ```bash
 > sudo apt install python3-venv python3-pip
 > mkdir /opt/Data/PythonVenv
@@ -18,7 +17,6 @@
 
 
 ## 3. 启动服务
-
 ```bash
 > python WebGradio/ChatInterfaceOpenAI.py
 ```

@@ -10,17 +10,19 @@ load_dotenv()
 
 BindLocalIP = os.getenv('LocalIP')
 BindPort = os.getenv('BindPort')
+OpenAiServer = os.getenv('OpenAiServer')
 OpenAiPort = os.getenv('OpenAiPort')
 GradioUser = os.getenv('GradioUser')
 GradioPassword = os.getenv('GradioPassword')
 
 print(f"BindLocalIP: {BindLocalIP}")
 print(f"BindPort: {BindPort}")
+print(f"OpenAiServer: {OpenAiServer}")
 print(f"OpenAiPort: {OpenAiPort}")
 print(f"GradioUser: {GradioUser}")
 print(f"GradioPassword: {GradioPassword}")
 
-client = OpenAI(base_url=f"http://{BindLocalIP}:{OpenAiPort}/v1", api_key = "not need key")
+client = OpenAI(base_url=f"http://{OpenAiServer}:{OpenAiPort}/v1", api_key = "not need key")
 
 def predict(chatbot, history):
     input = chatbot[-1][0]
@@ -30,7 +32,7 @@ def predict(chatbot, history):
     response = client.chat.completions.create(model='gpt-3.5-turbo',
                                               messages= history,
                                               temperature=1.0,
-                                              max_tokens=8192,
+                                              max_tokens=131072,
                                               stream=True)
 
     partial_message = ""
@@ -47,7 +49,7 @@ def add_text(history, text):
     history = history + [(text, None)]
     return history, gr.Textbox(value="", interactive=False)
 
-with gr.Blocks(title = "智能客服小蓝8K", css="footer {visibility: hidden}") as demo:
+with gr.Blocks(title = "智能客服小蓝", css="footer {visibility: hidden}") as demo:
     chatbot = gr.Chatbot(
         [],
         elem_id="chatbot",
